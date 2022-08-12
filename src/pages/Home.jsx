@@ -65,12 +65,12 @@ const Home = () => {
             {
               products.map(product => (
                 <Col key={product.id}>
-                  <Card onClick={() => navigate(`/products/${product.id}`)}>
-                    <Card.Img variant="top" src={product.productImgs} />
-                    <Card.Body>
-                      <Card.Title>{product.title}</Card.Title>
-                      <Card.Text>{product.description}
-                      </Card.Text>
+                  <Card style={{display:'flex', justifyContent:'center', alignItems:'center',textAlign: 'center'}} onClick={() => navigate(`/products/${product.id}`)}>
+                    <Card.Img style={{marginTop: '2rem'}} variant="top" src={product.productImgs} />
+                    <Card.Body style={{width: '200px', height:'150px'}}>
+                      <br />
+                      <Card.Title  >{product.title}</Card.Title>
+                    
                     </Card.Body>
                   </Card>
                 </Col>

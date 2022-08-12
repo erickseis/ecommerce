@@ -46,8 +46,25 @@ img{
   border-radius: 5px;
   width: 250px;
   height: 40px;
+  flex-direction: column;
 }
 .products-detail h2 :hover{
   transition: all 1s ease-in-out, height 0ms;
   
+}
+
+
+@media(min-width: 1000px) {
+  #cart, #logout, #login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-left: 70rem;
+    }
+    #logout, #login{
+      margin-left: 64rem;
+    }
+
 }

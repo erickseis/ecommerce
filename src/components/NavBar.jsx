@@ -1,35 +1,76 @@
-import React from 'react';
-import {Navbar, Container, Nav, NavDropdown, Form, Button} from "react-bootstrap"
+import React, { useState } from 'react';
+import { Navbar, Container, Nav, NavDropdown, Form, Button, Offcanvas } from "react-bootstrap"
+import { useNavigate } from 'react-router-dom';
+import CartSidebar from './Cart';
+
 const NavBar = () => {
-    return (
-        <Navbar bg="primary" variant="dark" expand="lg">
-        <Container fluid>
-          <Navbar.Brand href="/#/">Home</Navbar.Brand>
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const [show, setShow] = useState(false);
+
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => {
+    if (token) {
+      setShow(true);
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const logout = () => {
+    localStorage.setItem("token", "");
+    navigate("/login")
+  }
+
+
+  return (
+    <>
+      <Navbar style={{backgroundColor: '#00FF33', color:'black'}} bg="#00FF33" variant="dark" expand="lg">
+        <Container  fluid>
+          <Navbar.Brand style={{color:'black'}} href="/#/">Home</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: '100px' }}
+              style={{ maxHeight: '100px', marginLeft: '5rem', display: 'flex', gap: '0.5rem' }}
               navbarScroll
             >
-              <Nav.Link href="/#/products/:id">products</Nav.Link>
-              <Nav.Link href="/#/purchase">purchase</Nav.Link>
-              <Nav.Link href="/#/login">login</Nav.Link>
-              </Nav>
-            {/* <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form> */}
+              <Nav.Link style={{color:'black'}} href="/#/products/:id">products</Nav.Link>
+              <Nav.Link style={{color:'black'}} href="/#/purchase">purchase</Nav.Link>
+
+            
+
+                {
+                  token ? (<Nav.Link
+                    id='logout'
+                    variant="danger" as={Button} onClick={logout} >log out</Nav.Link>
+                  ) : (
+                    <Nav.Link
+                    style={{color:'black'}}
+                    id='login'  
+                    variant="danger" href="/#/login">login</Nav.Link>
+                  )
+                }
+                <Nav.Link
+                  id='cart'
+                  style={{ fontSize: "20px" }}
+                  variant="danger"
+                  as={Button}
+                  onClick={handleShow}>
+                  <i className="fa-solid fa-cart-shopping"></i>
+                </Nav.Link>
+
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      );
-    
+
+      <CartSidebar show={show} handleClose={handleClose} />
+    </>
+  );
+
 };
 
 export default NavBar;
